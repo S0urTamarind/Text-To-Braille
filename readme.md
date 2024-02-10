@@ -1,23 +1,12 @@
 # TEXT TO BRAILLE CONVERTER
-
-## Team Members:
-<details>
-  <summary>details</summary>
-  Semester : 3rd Sem B. Tech. CSE<br/>
-  Section : S2
-  
+## Team Members:  
   1\. Alen Basil Thelappilly, 221CS206, alenbasilthelappilly.221cs206@nitk.edu.in
   
   2\. Hemanth Kumar P L, 221CS225, hemanthkumarpl.221cs225@nitk.edu.in
   
   3\. Rathod Smit Amitkumar, 221CS238, smit.221cs238@nitk.edu.in
   
-</details>
-
 ## Abstract:
-
-<details>
-  <summary>details</summary>
   This project aims to create a Text to Braille Converter using logic
   gates, integrated circuits (ICs), and advanced design techniques,
   emphasizing creating a foundational component for various Braille
@@ -57,12 +46,7 @@
   and inclusivity for people with visual impairments in the future, paving
   the way for many innovative Braille solutions.
 
-</details>
-
 ## Working description :
-<details>
-  <summary>details</summary>
-  
   **Introduction:**
   
   In our ever-evolving world, technology continues to be a powerful force
@@ -162,13 +146,8 @@
   --
   
   ![[flowchart](https://github.com/S2-team11/Text-To-Braille-S2T11/assets/148744908/87d28f7b-7096-4aba-a7af-e4625fc169d0)](https://github.com/S2-team11/Text-To-Braille-S2T11/blob/8f1c00fd382b7f3820590041626200436f521478/Snapshots/Flowchart.png)
-  
-</details>
 
 ## Logisim Circuit Diagram :
-<details>
-  <summary>details</summary>
-  
   Main :
   --
   
@@ -189,105 +168,3 @@
   
   ![[Counter](https://github.com/S2-team11/Text-To-Braille-S2T11/assets/148744908/9daff273-9097-47ee-bd4a-92cb4e5fafc1)](https://github.com/S2-team11/Text-To-Braille-S2T11/blob/5ebc70704a74ea2de9dc192780c60da77a2ec8cd/Snapshots/Counter.png)
   --
-</details>
-
-## Verilog code:
-<details>
-  <summary>details</summary>
-  
-  **Testbench:**
-  
-  module main_tb;
-  
-      reg [25:0]alp;
-  
-      wire Of1, Of2, Of3, Of4, Of5, Of6;
-  
-      top t (alp, Of1, Of2, Of3, Of4, Of5, Of6);
-  
-      initial
-  
-      begin
-  
-          $dumpfile("Project.vcd");
-  
-          $dumpvars(0, main_tb);
-  
-      end
-  
-      initial
-  
-      begin
-  
-          $display("|                   Encoded Aplhabets                     |        Braille        |");
-  
-          $display("-----------------------------------------------------------------------------------");
-  
-          #10 alp = 26'b00000000000000000000000001;
-  
-          $monitor("|               %b                | %b | %b | %b | %b | %b | %b |", alp, Of1, Of2, Of3, Of4, Of5, Of6);
-  
-          repeat(25)
-  
-          #10 alp = alp * 26'b00000000000000000000000010;
-  
-      end
-  
-      initial #300 $finish;
-  
-  endmodule
-  
-  **Main:**
-  
-  module key(alp, O16, O8, O4, O2, O1);
-  
-      input [25:0] alp;
-  
-      output O16, O8, O4, O2, O1;
-  
-      assign O16 = (alp[15] | alp[16] | alp[17] | alp[18] | alp[19] | alp[20] | alp[21] | alp[22] | alp[23] | alp[24] | alp[25]);
-  
-      assign O8 = (alp[7] | alp[8] | alp[9] | alp[10] | alp[11] | alp[12] | alp[13] | alp[14] | alp[23] | alp[24] | alp[25]);
-  
-      assign O4 = (alp[3] | alp[4] | alp[5] | alp[6] | alp[11] | alp[12] | alp[13] | alp[14] | alp[19] | alp[20] | alp[21] | alp[22]);
-  
-      assign O2 = (alp[1] | alp[2] | alp[5] | alp[6] | alp[9] | alp[10] | alp[13] | alp[14] | alp[17] | alp[18] | alp[21] | alp[22] | alp[25]);
-  
-      assign O1 = (alp[0] | alp[2] | alp[4] | alp[6] | alp[8] | alp[10] | alp[12] | alp[14] | alp[16] | alp[18] | alp[20] | alp[22] | alp[24]);
-  
-  endmodule
-  
-  module converter(A, B, C, D, E, Of1, Of2, Of3, Of4, Of5, Of6);
-  
-      input A, B, C, D, E;
-  
-      output Of1, Of2, Of3, Of4, Of5, Of6;
-  
-      assign Of1 = ((~B) & (~D) & E) | ((~B) & D & (~E)) | ((~A) & D & E) | ((~A) & C) | (B & (~C) & (~D) & ~(E))| (A & (~C) & (~D)) | (A & (~C) & (~E));
-  
-      assign Of2 = ((~B) & D & E) | ((~A) & (~B) & C & (~E)) | (B & (~D) & E) | ((~A) & B & D & (~E)) | (A & (~C) & (~D)) | (A & (~D) & (~E));
-  
-      assign Of3 = ((~A) & (~C) & D & (~E)) | ((~B) & C & D) | ((~A) & B & (~C) & (~D)) | ((~A) & B & (~D) & (~E)) | (A & (~B) & (~C)) | (A & (~B) & (~E));
-  
-      assign Of4 = ((~A) & (~B) & C & (~D)) | ((~B) & C & (~D) & (~E)) | (C & D & E) | ((~A) & B & (~C) & (~E)) | (B & D & (~E)) | (A & (~C) & (~D) & E) | (A & (~C) & D & (~E));
-  
-      assign Of5 = (B & D & E) | (B & C) | (A & (~C)) | (A & (~D)) | (A & (~E));
-  
-      assign Of6 = (A & C & E) | (A & C & D) | (A & B);
-  
-  endmodule
-  
-  module top(alp, Of1, Of2, Of3, Of4, Of5, Of6);
-  
-      input [25:0] alp;
-  
-      output Of1, Of2, Of3, Of4, Of5, Of6;
-  
-      wire O16, O8, O4, O2, O1;
-  
-      key K0(.alp(alp), .O16(O16), .O8(O8), .O4(O4), .O2(O2), .O1(O1));
-  
-      converter C0(.A(O16), .B(O8), .C(O4), .D(O2), .E(O1), .Of1(Of1), .Of2(Of2), .Of3(Of3), .Of4(Of4), .Of5(Of5), .Of6(Of6));
-  
-  endmodule
-</details>
